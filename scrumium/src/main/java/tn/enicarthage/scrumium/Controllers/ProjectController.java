@@ -8,6 +8,7 @@ import tn.enicarthage.scrumium.Services.ProjectService;
 import java.util.List;
 
 @RestController
+@RequestMapping("/project")
 public class ProjectController {
     private final ProjectService projectService;
     @Autowired
