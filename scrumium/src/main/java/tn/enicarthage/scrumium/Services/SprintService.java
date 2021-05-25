@@ -2,6 +2,7 @@ package tn.enicarthage.scrumium.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tn.enicarthage.scrumium.Domain.Sprint;
 import tn.enicarthage.scrumium.Repositories.SprintRepository;
 
 @Service
@@ -10,5 +11,9 @@ public class SprintService {
     @Autowired
     public SprintService(SprintRepository sprintRepository) {
         this.sprintRepository = sprintRepository;
+    }
+
+    public void addSprint(Sprint sprint) {
+        sprintRepository.save(sprint);
     }
 }

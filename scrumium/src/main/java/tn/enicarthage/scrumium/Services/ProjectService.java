@@ -3,6 +3,7 @@ package tn.enicarthage.scrumium.Services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.enicarthage.scrumium.Domain.Project;
+import tn.enicarthage.scrumium.Domain.Sprint;
 import tn.enicarthage.scrumium.Repositories.ProjectRepository;
 
 import javax.transaction.Transactional;
@@ -12,9 +13,12 @@ import java.util.Optional;
 @Service
 public class ProjectService {
     private final ProjectRepository projectRepository;
+    private final SprintService sprintService;
+
     @Autowired
-    public ProjectService(ProjectRepository projectRepository) {
+    public ProjectService(ProjectRepository projectRepository, SprintService sprintService) {
         this.projectRepository = projectRepository;
+        this.sprintService = sprintService;
     }
 
     public List<Project> getAllProjects() {
@@ -59,5 +63,13 @@ public class ProjectService {
         boolean exists = projectRepository.existsById(projectId);
         if(!exists) throw new IllegalStateException("Project with id = " + projectId + " does not exists");
         projectRepository.deleteById(projectId);
+    }
+
+    public void addSprint(Long projectId, Sprint sprint) {
+        Optional<Project> p = projectRepository.findById(projectId);
+        if (p.isEmpty()) throw new IllegalStateException("Project with Id = "+projectId+" Does not exist");
+        Project projectInit = p.get();
+        sprint.setProject(projectInit);
+        sprintService.addSprint(sprint);
     }
 }

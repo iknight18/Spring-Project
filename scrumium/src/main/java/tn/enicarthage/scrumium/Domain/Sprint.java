@@ -1,6 +1,8 @@
 package tn.enicarthage.scrumium.Domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -21,6 +23,8 @@ public class Sprint {
     private final LocalDate Timestamp = LocalDate.now();
     private Integer duration;
     private String Description;
+    @ManyToOne()
+    private Project project;
 
     @Override
     public String toString() {
@@ -30,13 +34,23 @@ public class Sprint {
                 ", Timestamp=" + Timestamp +
                 ", duration=" + duration +
                 ", Description='" + Description + '\'' +
+                ", project=" + project +
                 '}';
     }
+    @JsonIgnore
+    public Project getProject() {
+        return project;
+    }
 
-    public Sprint(Integer number, Integer duration, String description) {
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
+    public Sprint(Integer number, Integer duration, String description, Project project) {
         this.number = number;
         this.duration = duration;
         Description = description;
+        this.project = project;
     }
 
     public Long getId() {

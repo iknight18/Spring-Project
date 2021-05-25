@@ -3,6 +3,7 @@ package tn.enicarthage.scrumium.Controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.enicarthage.scrumium.Domain.Project;
+import tn.enicarthage.scrumium.Domain.Sprint;
 import tn.enicarthage.scrumium.Services.ProjectService;
 
 import java.util.List;
@@ -22,6 +23,11 @@ public class ProjectController {
     public String addProject(@RequestBody Project project){
         return projectService.addProject(project);
     }
+    @PostMapping("{projectId}/sprint")
+    public String addSprint(@PathVariable Long projectId,@RequestBody Sprint sprint){
+        projectService.addSprint(projectId,sprint);
+        return "Done";
+    }
     @GetMapping(path="{projectName}")
     public Project getProjectByName(@PathVariable String projectName){
         return projectService.getProjectByName(projectName);
@@ -29,6 +35,10 @@ public class ProjectController {
     @GetMapping(path="/id/{projectId}")
     public Project getProjectById(@PathVariable Long projectId){
         return projectService.getProjectById(projectId);
+    }
+    @GetMapping(path="/{projectId}/{sprintId}")
+    public Sprint getSprintById(@PathVariable Long projectId,@PathVariable Long sprintId){
+        return projectService.getProjectById(projectId).getSprintList().stream().filter(s->s.getId().equals(sprintId)).findAny().orElse(null);
     }
     @PutMapping("{projectId}")
     public String updateProject(@PathVariable Long projectId,@RequestBody(required = false) Project project){
