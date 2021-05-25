@@ -22,7 +22,7 @@ public class Project {
     private Integer velocity;
     private LocalDate TimeStamp = LocalDate.now();
 
-    @OneToMany(mappedBy = "project")
+    @OneToMany(mappedBy = "project",cascade = CascadeType.ALL)
     private List<Sprint> sprintList;
     public Project() {
     }
