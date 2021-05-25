@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.*;
 import tn.enicarthage.scrumium.Domain.Project;
 import tn.enicarthage.scrumium.Domain.Sprint;
 import tn.enicarthage.scrumium.Services.ProjectService;
-
 import java.util.List;
 
 @RestController
@@ -26,7 +25,7 @@ public class ProjectController {
     @PostMapping("{projectId}/sprint")
     public String addSprint(@PathVariable Long projectId,@RequestBody Sprint sprint){
         projectService.addSprint(projectId,sprint);
-        return "Done";
+        return "Adding done !";
     }
     @GetMapping(path="{projectName}")
     public Project getProjectByName(@PathVariable String projectName){
@@ -38,16 +37,17 @@ public class ProjectController {
     }
     @GetMapping(path="/{projectId}/{sprintId}")
     public Sprint getSprintById(@PathVariable Long projectId,@PathVariable Long sprintId){
-        return projectService.getProjectById(projectId).getSprintList().stream().filter(s->s.getId().equals(sprintId)).findAny().orElse(null);
+        return projectService.getProjectById(projectId).getSprintList().stream()
+                .filter(s->s.getId().equals(sprintId)).findAny().orElse(null);
     }
     @PutMapping("{projectId}")
     public String updateProject(@PathVariable Long projectId,@RequestBody(required = false) Project project){
         projectService.updateProject(projectId,project);
-        return "Project Updated";
+        return "Project updated !" ;
     }
     @DeleteMapping(path="{projectId}")
     public String deleteProject(@PathVariable Long projectId){
         projectService.deleteProject(projectId);
-        return "Project "+projectId+" Deleted";
+        return "Project "+projectId+" deleted !";
     }
 }
