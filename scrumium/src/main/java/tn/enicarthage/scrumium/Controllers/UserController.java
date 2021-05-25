@@ -18,7 +18,7 @@ public class UserController {
     @GetMapping("/all")
     public List<User> getAllUsers(){
         return userService.getAllUsers();}
-    @PostMapping
+    @PostMapping("/api/user")
     public String addUser(@RequestBody User user){
         return userService.addUser(user);
     }

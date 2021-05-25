@@ -1,3 +1,5 @@
+package tn.enicarthage.scrumium.utils;
+
 public class SecurityConstants {
 
     public static final String SECRET = "SECRET_KEY";
